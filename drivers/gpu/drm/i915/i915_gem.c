@@ -1456,6 +1456,7 @@ out:
 		ret = VM_FAULT_OOM;
 		break;
 	case -ENOSPC:
+	case -EFAULT:
 		ret = VM_FAULT_SIGBUS;
 		break;
 	default:
