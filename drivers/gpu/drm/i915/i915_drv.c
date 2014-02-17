@@ -429,7 +429,7 @@ static int i915_drm_freeze(struct drm_device *dev)
 	/* We do a lot of poking in a lot of registers, make sure they work
 	 * properly. */
 	hsw_disable_package_c8(dev_priv);
-	intel_display_set_init_power(dev, true);
+	intel_display_set_init_power(dev_priv, true);
 
 	drm_kms_helper_poll_disable(dev);
 
@@ -537,9 +537,10 @@ static void intel_resume_hotplug(struct drm_device *dev)
 
 static int i915_drm_thaw_early(struct drm_device *dev)
 {
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	intel_uncore_early_sanitize(dev);
 	intel_uncore_sanitize(dev);
-	intel_power_domains_init_hw(dev);
+	intel_power_domains_init_hw(dev_priv);
 
 	return 0;
 }
