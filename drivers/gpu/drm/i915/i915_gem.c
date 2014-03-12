@@ -3485,8 +3485,6 @@ int i915_gem_object_set_cache_level(struct drm_i915_gem_object *obj,
 			ret = i915_vma_unbind(vma);
 			if (ret)
 				return ret;
-
-			break;
 		}
 	}
 
