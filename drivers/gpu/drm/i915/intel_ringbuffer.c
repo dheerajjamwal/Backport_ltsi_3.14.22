@@ -406,13 +406,13 @@ gen8_render_ring_flush(struct intel_ring_buffer *ring,
 static void ring_write_tail(struct intel_ring_buffer *ring,
 			    u32 value)
 {
-	drm_i915_private_t *dev_priv = ring->dev->dev_private;
+	struct drm_i915_private *dev_priv = ring->dev->dev_private;
 	I915_WRITE_TAIL(ring, value);
 }
 
 u64 intel_ring_get_active_head(struct intel_ring_buffer *ring)
 {
-	drm_i915_private_t *dev_priv = ring->dev->dev_private;
+	struct drm_i915_private *dev_priv = ring->dev->dev_private;
 	u64 acthd;
 
 	if (INTEL_INFO(ring->dev)->gen >= 8)
@@ -440,7 +440,7 @@ static void ring_setup_phys_status_page(struct intel_ring_buffer *ring)
 static int init_ring_common(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct drm_i915_gem_object *obj = ring->obj;
 	int ret = 0;
 	u32 head;
@@ -860,7 +860,7 @@ static bool
 gen5_ring_get_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	if (!dev->irq_enabled)
@@ -878,7 +878,7 @@ static void
 gen5_ring_put_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, flags);
@@ -891,7 +891,7 @@ static bool
 i9xx_ring_get_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	if (!dev->irq_enabled)
@@ -912,7 +912,7 @@ static void
 i9xx_ring_put_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, flags);
@@ -928,7 +928,7 @@ static bool
 i8xx_ring_get_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	if (!dev->irq_enabled)
@@ -949,7 +949,7 @@ static void
 i8xx_ring_put_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, flags);
@@ -964,7 +964,7 @@ i8xx_ring_put_irq(struct intel_ring_buffer *ring)
 void intel_ring_setup_status_page(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = ring->dev->dev_private;
+	struct drm_i915_private *dev_priv = ring->dev->dev_private;
 	u32 mmio = 0;
 
 	/* The ring status page addresses are no longer next to the rest of
@@ -1057,7 +1057,7 @@ static bool
 gen6_ring_get_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	if (!dev->irq_enabled)
@@ -1082,7 +1082,7 @@ static void
 gen6_ring_put_irq(struct intel_ring_buffer *ring)
 {
 	struct drm_device *dev = ring->dev;
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	unsigned long flags;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, flags);
@@ -1649,7 +1649,7 @@ static int __intel_ring_prepare(struct intel_ring_buffer *ring,
 int intel_ring_begin(struct intel_ring_buffer *ring,
 		     int num_dwords)
 {
-	drm_i915_private_t *dev_priv = ring->dev->dev_private;
+	struct drm_i915_private *dev_priv = ring->dev->dev_private;
 	int ret;
 
 	ret = i915_gem_check_wedge(&dev_priv->gpu_error,
@@ -1711,7 +1711,7 @@ void intel_ring_init_seqno(struct intel_ring_buffer *ring, u32 seqno)
 static void gen6_bsd_ring_write_tail(struct intel_ring_buffer *ring,
 				     u32 value)
 {
-	drm_i915_private_t *dev_priv = ring->dev->dev_private;
+	struct drm_i915_private *dev_priv = ring->dev->dev_private;
 
        /* Every tail move must follow the sequence below */
 
@@ -1886,7 +1886,7 @@ static int gen6_ring_flush(struct intel_ring_buffer *ring,
 
 int intel_init_render_ring_buffer(struct drm_device *dev)
 {
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct intel_ring_buffer *ring = &dev_priv->ring[RCS];
 
 	ring->name = "render ring";
@@ -1987,7 +1987,7 @@ int intel_init_render_ring_buffer(struct drm_device *dev)
 
 int intel_render_ring_init_dri(struct drm_device *dev, u64 start, u32 size)
 {
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct intel_ring_buffer *ring = &dev_priv->ring[RCS];
 	int ret;
 
@@ -2055,7 +2055,7 @@ int intel_render_ring_init_dri(struct drm_device *dev, u64 start, u32 size)
 
 int intel_init_bsd_ring_buffer(struct drm_device *dev)
 {
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct intel_ring_buffer *ring = &dev_priv->ring[VCS];
 
 	ring->name = "bsd ring";
@@ -2118,7 +2118,7 @@ int intel_init_bsd_ring_buffer(struct drm_device *dev)
 
 int intel_init_blt_ring_buffer(struct drm_device *dev)
 {
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct intel_ring_buffer *ring = &dev_priv->ring[BCS];
 
 	ring->name = "blitter ring";
@@ -2158,7 +2158,7 @@ int intel_init_blt_ring_buffer(struct drm_device *dev)
 
 int intel_init_vebox_ring_buffer(struct drm_device *dev)
 {
-	drm_i915_private_t *dev_priv = dev->dev_private;
+	struct drm_i915_private *dev_priv = dev->dev_private;
 	struct intel_ring_buffer *ring = &dev_priv->ring[VECS];
 
 	ring->name = "video enhancement ring";
