@@ -621,6 +621,10 @@ struct i915_fbc {
 	} no_fbc_reason;
 };
 
+struct i915_drrs {
+	struct intel_connector *connector;
+};
+
 struct i915_psr {
 	bool sink_support;
 	bool source_ok;
@@ -1311,6 +1315,7 @@ struct drm_i915_private {
 	struct timer_list hotplug_reenable_timer;
 
 	struct i915_fbc fbc;
+	struct i915_drrs drrs;
 	struct intel_opregion opregion;
 	struct intel_vbt_data vbt;
 
