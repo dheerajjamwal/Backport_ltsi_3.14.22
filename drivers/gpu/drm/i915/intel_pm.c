@@ -1548,7 +1548,7 @@ static void i9xx_update_wm(struct drm_crtc *unused_crtc)
 	if (IS_I915GM(dev) && enabled) {
 		struct intel_framebuffer *fb;
 
-		fb = to_intel_framebuffer(enabled->fb);
+		fb = to_intel_framebuffer(enabled->primary->fb);
 
 		/* self-refresh seems busted with untiled */
 		if (fb->obj->tiling_mode == I915_TILING_NONE)
