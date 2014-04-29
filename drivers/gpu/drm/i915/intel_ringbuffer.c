@@ -1213,7 +1213,7 @@ gen8_ring_put_irq(struct intel_ring_buffer *ring)
 
 static int
 i965_dispatch_execbuffer(struct intel_ring_buffer *ring,
-			 u32 offset, u32 length,
+			 u64 offset, u32 length,
 			 unsigned flags)
 {
 	int ret;
@@ -1236,7 +1236,7 @@ i965_dispatch_execbuffer(struct intel_ring_buffer *ring,
 #define I830_BATCH_LIMIT (256*1024)
 static int
 i830_dispatch_execbuffer(struct intel_ring_buffer *ring,
-				u32 offset, u32 len,
+				u64 offset, u32 len,
 				unsigned flags)
 {
 	int ret;
@@ -1287,7 +1287,7 @@ i830_dispatch_execbuffer(struct intel_ring_buffer *ring,
 
 static int
 i915_dispatch_execbuffer(struct intel_ring_buffer *ring,
-			 u32 offset, u32 len,
+			 u64 offset, u32 len,
 			 unsigned flags)
 {
 	int ret;
@@ -1800,7 +1800,7 @@ static int gen6_bsd_ring_flush(struct intel_ring_buffer *ring,
 
 static int
 gen8_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
-			      u32 offset, u32 len,
+			      u64 offset, u32 len,
 			      unsigned flags)
 {
 	struct drm_i915_private *dev_priv = ring->dev->dev_private;
@@ -1814,8 +1814,8 @@ gen8_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
 
 	/* FIXME(BDW): Address space and security selectors. */
 	intel_ring_emit(ring, MI_BATCH_BUFFER_START_GEN8 | (ppgtt<<8));
-	intel_ring_emit(ring, offset);
-	intel_ring_emit(ring, 0);
+	intel_ring_emit(ring, lower_32_bits(offset));
+	intel_ring_emit(ring, upper_32_bits(offset));
 	intel_ring_emit(ring, MI_NOOP);
 	intel_ring_advance(ring);
 
@@ -1824,7 +1824,7 @@ gen8_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
 
 static int
 hsw_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
-			      u32 offset, u32 len,
+			      u64 offset, u32 len,
 			      unsigned flags)
 {
 	int ret;
@@ -1845,7 +1845,7 @@ hsw_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
 
 static int
 gen6_ring_dispatch_execbuffer(struct intel_ring_buffer *ring,
-			      u32 offset, u32 len,
+			      u64 offset, u32 len,
 			      unsigned flags)
 {
 	int ret;
