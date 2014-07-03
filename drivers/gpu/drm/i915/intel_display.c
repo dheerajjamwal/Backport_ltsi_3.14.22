@@ -11603,6 +11603,14 @@ static void quirk_no_pcm_pwm_enable(struct drm_device *dev)
 	DRM_INFO("applying no-PCH_PWM_ENABLE quirk\n");
 }
 
+/* Some VBT's incorrectly indicate no backlight is present */
+static void quirk_backlight_present(struct drm_device *dev)
+{
+	struct drm_i915_private *dev_priv = dev->dev_private;
+	dev_priv->quirks |= QUIRK_BACKLIGHT_PRESENT;
+	DRM_INFO("applying backlight present quirk\n");
+}
+
 struct intel_quirk {
 	int device;
 	int subsystem_vendor;
